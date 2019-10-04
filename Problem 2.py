@@ -1,4 +1,3 @@
-# from Modules.enums import Session
 from Modules.enums import Session
 
 
@@ -9,25 +8,36 @@ class Step:
         self.number_of_stars = number_of_stars
 
     def make_step(self):
-        sessions_number=int
-        star_number=str
-        if sessions_number == Session.sessions[int(self.number_of_sessions)] \
-                and star_number == Session.star[str(self.number_of_stars)]:
-            print("I completed " + Session.sessions[int(self.number_of_sessions)] + " sessions and I rated my expert " +
-                  Session.star[str(self.number_of_stars)] + " starts")
+        if (self.number_of_sessions in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys()) and \
+                (self.number_of_stars in Session.NUMBER_TO_TEXT_MAP["STARS"].keys()):
+            print("I completed "
+                  + Session.NUMBER_TO_TEXT_MAP["SESSIONS"][self.number_of_sessions]
+                  + " sessions and I rated my expert "
+                  + str(Session.NUMBER_TO_TEXT_MAP["STARS"][self.number_of_stars])
+                  + " starts")
         else:
-             raise Exception("invalid number of session")
+            if self.number_of_sessions not in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys():
+                print("Invalid number of sessions")
+            else:
+                if self.number_of_stars not in Session.NUMBER_TO_TEXT_MAP["STARS"].keys():
+                    print("Invalid number of starts")
+
+Step(22, "two").make_step()
+
+class InvalidValueException(Exception):
+    def __init__(self, message1, message2):
+        self.message1 = message1
+        self.message2 = message2
 
 
- try:
-Step(7, "four").make_step()
- except Exception:
-     raise Exception("invalid number of session")
+# if __name__ == '__main__':
+#     Step(2, "four").make_step()
+#     message1 = "Invalid number of stars"
+#     message2 = "Invalid number of sessions"
+#     if (Step.make_step.(self.number_of_sessions)) in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys()) and \
+#                 (Step.number_of_sessions in Session.NUMBER_TO_TEXT_MAP["STARS"].keys()):
+#         raise InvalidValueException(message1)
 
-
- class InvalidValueException(Exception):
-     def __init__(self, message):
-         self.message=message
 
 
 
