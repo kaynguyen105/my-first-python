@@ -1,28 +1,44 @@
-# with open("data_file.json", "w+") as write_file:
-#     json.dump(data, write_file)
-
+from Modules.modify_data import ModifyData
 import json
-class StorefrontConfig():
-    data: object
+from Modules.modify_data import ModifyData
 
-    def __int__(self, data):
-        self.data=data
+
+class StorefrontConfig:
+    def __init__(self, data):
+        self.data = data
+
+    def update(self, modify_data):
+        for y in self.data and modify_data:
+            if self.data[y] != modify_data[y]:
+                self.data[y] = str(modify_data[y])
+
+
+
 
 class FileController():
-    def read_file(self):
+
+    def read_file(self, location):
         """
         read JSON file
         :return:
         """
-        my_file = open("/Users/hainguyen/Documents/workspace_python/PythonTutorial/Modules/data.json", "r")
-        print(my_file.read())
-        my_file.close()
-        pass
-    def write_file(self):
+        f = open(location)
+        data_str = f.read()
+        data = json.loads(data_str)
+
+        store_config = StorefrontConfig(data)
+        return store_config
+
+    def write_file(self, storefront_config, file_name):
         """
         write Json file
         :return:
         """
         my_file = open("/Users/hainguyen/Documents/workspace_python/PythonTutorial/Modules/file_name.json", "w")
-        print(my_file.write())
+        my_file.write(str(storefront_config.data))
         my_file.close()
+
+file_controller = FileController()
+config= file_controller.read_file("/Users/hainguyen/Documents/workspace_python/PythonTutorial/Modules/data.json")
+config.update(ModifyData.modify_data)
+file_controller.write_file(config, "file_name.json")
