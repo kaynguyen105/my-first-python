@@ -8,16 +8,19 @@ class StorefrontConfig:
         self.data = data
 
     def update(self, modify_data):
-        update_helper(self.data, modify_data)
+        # update_helper(self.data, modify_data)
+        self.data = self.update_helper(self.data, modify_data)
 
 
-def update_helper(data, modify_data):
-    for key, value in modify_data.items():
-        if key in data.keys() and not isinstance(value, dict):
-            data[key] = value
-        else:
-            data[key] = update_helper(data[key], value)
-    return data
+    def update_helper(self, data, modify_data):
+        for key, value in modify_data.items():
+            if key not in data.keys() and not isinstance(value, dict):
+                data.update(modify_data)
+            elif key in data.keys() and not isinstance(value, dict):
+                data[key] = value
+            else:
+                data[key] = self.update_helper(data[key], value)
+        return data
 
 
 class FileController:
