@@ -8,21 +8,22 @@ class Step:
         self.number_of_stars = number_of_stars
 
     def make_step(self):
+        message1 = "Invalid number of sessions"
+        message2 = "Invalid number of stars"
         try:
-            if (self.number_of_sessions in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys()) and \
-                        (self.number_of_stars in Session.NUMBER_TO_TEXT_MAP["STARS"].keys()):
+            if self.number_of_sessions in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys():
+                if self.number_of_stars in Session.NUMBER_TO_TEXT_MAP["STARS"].keys():
                     print("I completed "
-                          + Session.NUMBER_TO_TEXT_MAP["SESSIONS"][self.number_of_sessions]
-                          + " sessions and I rated my expert "
-                          + str(Session.NUMBER_TO_TEXT_MAP["STARS"][self.number_of_stars])
-                          + " starts")
+                                       + Session.NUMBER_TO_TEXT_MAP["SESSIONS"][self.number_of_sessions]
+                                       + " sessions and I rated my expert "
+                                       + str(Session.NUMBER_TO_TEXT_MAP["STARS"][self.number_of_stars])
+                                       + " starts")
+                else:
+                    raise InvalidValueException(message2)
             else:
-                raise InvalidValueException
-        except:
-            if self.number_of_sessions not in Session.NUMBER_TO_TEXT_MAP["SESSIONS"].keys():
-                print(InvalidValueException(message1))
-            elif self.number_of_stars not in Session.NUMBER_TO_TEXT_MAP["STARS"].keys():
-                print(InvalidValueException(message2))
+                raise InvalidValueException(message1)
+        except InvalidValueException as e:
+            print(e)
 
 
 class InvalidValueException(Exception):
@@ -30,7 +31,4 @@ class InvalidValueException(Exception):
         self.message = message
 
 
-message1 = "Invalid number of sessions"
-message2 = "Invalid number of stars"
-Step(88, "four").make_step()
-
+Step(9, "four").make_step()
