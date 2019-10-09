@@ -32,5 +32,5 @@ class InvalidValueException(Exception):
 
 message1 = "Invalid number of sessions"
 message2 = "Invalid number of stars"
-Step(8, "four").make_step()
+Step(88, "four").make_step()
 
